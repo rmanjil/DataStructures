@@ -11,6 +11,7 @@ struct ContentView: View {
                 push()
                 append()
                 insert()
+                pop()
             }
         }
     }

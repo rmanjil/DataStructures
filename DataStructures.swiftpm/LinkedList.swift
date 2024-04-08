@@ -54,6 +54,18 @@ struct LinkedList<Value> {
         node.next = Node(value: value, next: node.next)
         return node.next!
     }
+    
+    /// remove value at the front of list
+    @discardableResult
+    mutating func pop() -> Value? {
+        defer {
+            head = head?.next
+            if isEmpty {
+                tail = nil
+            }
+        }
+        return head?.value
+    }
 }
 
 extension LinkedList: CustomStringConvertible {
@@ -101,5 +113,18 @@ func insert() {
             middleNode = list.insert(-1, after: middleNode)
         }
         print("After inserting: \(list)")
+    }
+}
+
+func pop() {
+    example(of: "pop") {
+        var list = LinkedList<Int>()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+        print("Before popping list: \(list)")
+        let poppedValue = list.pop()
+        print("After popping list: \(list)")
+        print("Popped value " + String(describing: poppedValue))
     }
 }
