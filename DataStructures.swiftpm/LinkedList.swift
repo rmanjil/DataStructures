@@ -42,7 +42,17 @@ struct LinkedList<Value> {
             currentNode = currentNode?.next
             currentIndex += 1
         }
-        return currentNode 
+        return currentNode
+    }
+    
+    @discardableResult
+    mutating func insert(_ value: Value, after node: Node<Value>) -> Node<Value> {
+        guard tail !== node else {
+            append(value)
+            return tail!
+        }
+        node.next = Node(value: value, next: node.next)
+        return node.next!
     }
 }
 
@@ -74,5 +84,22 @@ func append() {
         list.append(3)
         
         print(list)
+    }
+}
+
+
+func insert() {
+    example(of: "inserting at a particular index") {
+        var list = LinkedList<Int>()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+        
+        print("before inserting: \(list)")
+        var middleNode = list.node(at: 1)!
+        for _ in 1...4 {
+            middleNode = list.insert(-1, after: middleNode)
+        }
+        print("After inserting: \(list)")
     }
 }

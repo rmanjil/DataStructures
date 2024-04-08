@@ -10,6 +10,7 @@ struct ContentView: View {
                 createNode()
                 push()
                 append()
+                insert()
             }
         }
     }
