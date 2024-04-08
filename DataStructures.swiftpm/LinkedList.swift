@@ -25,7 +25,15 @@ struct LinkedList<Value> {
         }
     }
     
-    ///
+    /// add value at the end of list
+    mutating func append(_ value: Value) {
+        guard !isEmpty else {
+            push(value)
+            return
+        }
+        tail?.next = Node(value: value)
+        tail = tail?.next
+    }
 }
 
 extension LinkedList: CustomStringConvertible {
@@ -43,6 +51,17 @@ func push() {
         list.push(3)
         list.push(2)
         list.push(1)
+        
+        print(list)
+    }
+}
+
+func append() {
+    example(of: "append") {
+        var list = LinkedList<Int>()
+        list.append(1)
+        list.append(2)
+        list.append(3)
         
         print(list)
     }
