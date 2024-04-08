@@ -66,6 +66,27 @@ struct LinkedList<Value> {
         }
         return head?.value
     }
+    
+    /// remove last node for list
+    @discardableResult
+    mutating func removeLast() -> Value? {
+        guard let head else {
+            return nil
+        }
+        guard head.next != nil else {
+            return pop()
+        }
+        var prev = head
+        var current = head
+        
+        while let next = current.next {
+            prev = current
+            current = next
+        }
+        prev.next = nil
+        tail = prev
+        return current.value
+    }
 }
 
 extension LinkedList: CustomStringConvertible {
@@ -126,5 +147,18 @@ func pop() {
         let poppedValue = list.pop()
         print("After popping list: \(list)")
         print("Popped value " + String(describing: poppedValue))
+    }
+}
+
+func removeLast() {
+    example(of: "removing the last node") {
+        var list = LinkedList<Int>()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+        print("Before remove last node: \(list)")
+        let poppedValue = list.removeLast()
+        print("After removing last list: \(list)")
+        print("removed value " + String(describing: poppedValue))
     }
 }

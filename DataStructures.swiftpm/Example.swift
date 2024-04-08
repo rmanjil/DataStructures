@@ -8,6 +8,6 @@
 import Foundation
 
 func example(of message: String, completion: (() -> Void)) {
-    print("---Example of" + message + "---")
+    print("\n---Example of" + message + "---")
     completion()
 }
