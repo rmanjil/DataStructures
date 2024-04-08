@@ -17,4 +17,13 @@ class Node<Value> {
     }
 }
 
-extension Node: CustomStringConvertible
+extension Node: CustomStringConvertible {
+    var description: String {
+        guard let next else {
+            return "\(value)"
+        }
+        return "\(value) -> " + String(describing: next) + " "
+    }
+}
+
+
