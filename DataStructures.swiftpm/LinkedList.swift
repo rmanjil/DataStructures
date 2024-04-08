@@ -16,6 +16,16 @@ struct LinkedList<Value> {
     var isEmpty: Bool {
         head == nil
     }
+    
+    /// add value at the front of list
+    mutating func push(_ value: Value) {
+        head = Node(value: value, next: head)
+        if tail == nil {
+            tail = head
+        }
+    }
+    
+    ///
 }
 
 extension LinkedList: CustomStringConvertible {
@@ -24,5 +34,16 @@ extension LinkedList: CustomStringConvertible {
             return "Empty Linked List"
         }
         return String(describing: head)
+    }
+}
+
+func push() {
+    example(of: "push") {
+        var list = LinkedList<Int>()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+        
+        print(list)
     }
 }
