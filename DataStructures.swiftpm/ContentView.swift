@@ -8,12 +8,7 @@ struct ContentView: View {
                 .foregroundColor(.accentColor)
             Text("Hello, world!").onAppear {
                 createNode()
-                push()
-                append()
-                insert()
-                pop()
-                removeLast()
-                removedNode()
+                LinkedListOperation().perform()
             }
         }
     }
