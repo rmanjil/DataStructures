@@ -13,6 +13,7 @@ struct ContentView: View {
                 insert()
                 pop()
                 removeLast()
+                removedNode()
             }
         }
     }
