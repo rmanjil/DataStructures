@@ -108,3 +108,44 @@ extension LinkedList: CustomStringConvertible {
         return String(describing: head)
     }
 }
+
+extension LinkedList: Collection {
+        
+    public struct Index: Comparable {
+        var node: Node<Value>?
+        
+        static func ==(lhs: Index, rhs: Index) -> Bool {
+            switch (lhs.node, rhs.node) {
+            case let( left?, right?):
+                left.next === right.next
+            case (nil, nil):
+                true
+            default:
+                false
+            }
+        }
+        
+        static func <(lhs: Index, rhs: Index) -> Bool {
+            guard lhs != rhs else { return false }
+            let nodes = sequence(first: lhs.node) { $0?.next }
+            return nodes.contains(where: { $0 === rhs.node })
+        }
+    }
+    
+    
+    var startIndex: Index {
+        Index(node: head)
+    }
+    
+    var endIndex: Index {
+        Index(node: tail?.next)
+    }
+    
+    func index(after i: Index) -> Index {
+        Index(node: i.node?.next)
+    }
+    
+    subscript(position: Index) -> Value {
+        position.node!.value
+    }
+}
