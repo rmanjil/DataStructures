@@ -10,6 +10,15 @@ import Foundation
 struct Stack<Element> {
     private var storage: [Element] = []
     init() {}
+    
+    mutating func push(_ element: Element) {
+        storage.append(element)
+    }
+    
+    @discardableResult
+    mutating func pop() -> Element? {
+        storage.popLast()
+    }
 }
 
 
