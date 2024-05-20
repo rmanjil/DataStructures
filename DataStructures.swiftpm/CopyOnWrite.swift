@@ -11,6 +11,7 @@ struct CopyOnWrite {
     func perform() {
         copyOnWriteInArray()
         copyOnWriteInLinkedList()
+        checkKnownUniquelyReferenced()
     }
     
     private func copyOnWriteInArray() {
@@ -52,6 +53,17 @@ struct CopyOnWrite {
             list2.appendCOW(3)
             print("list1: \(list1)")
             print("list2: \(list2)")
+        }
+    }
+    
+    private func checkKnownUniquelyReferenced() {
+        example(of: "checkKnownUniquelyReferenced") {
+            var list1 = LinkedList<Int>()
+            list1.append(1)
+            list1.append(2)
+            print("List1 Uniquely Referenced: \(isKnownUniquelyReferenced(&list1.head))")
+            var list2 = list1
+            print("List1 Uniquely Referenced: \(isKnownUniquelyReferenced(&list1.head))")
         }
     }
 

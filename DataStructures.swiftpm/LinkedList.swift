@@ -157,6 +157,9 @@ extension LinkedList {
         guard var oldNode = head else {
             return
         }
+        guard !isKnownUniquelyReferenced(&oldNode) else {  // is  Uniquely Referenced
+            return
+        }
         head = Node(value: oldNode.value)
         var newNode = head
         while let nextOldNode = oldNode.next {
