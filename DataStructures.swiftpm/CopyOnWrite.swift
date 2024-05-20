@@ -28,16 +28,31 @@ struct CopyOnWrite {
     }
     
     private func copyOnWriteInLinkedList()  {
-        var list1 = LinkedList<Int>()
-        list1.append(1)
-        list1.append(2)
-        var list2 = list1
-        print("list1: \(list1)")
-        print("list2: \(list2)")
-        print("---After adding 3 to list 2---")
-        list2.append(3)
-        print("list1: \(list1)")
-        print("list2: \(list2)")
+        example(of: "Linked List cant use COW") {
+            var list1 = LinkedList<Int>()
+            list1.append(1)
+            list1.append(2)
+            var list2 = list1
+            print("list1: \(list1)")
+            print("list2: \(list2)")
+            print("---After adding 3 to list 2---")
+            list2.append(3)
+            print("list1: \(list1)")
+            print("list2: \(list2)")
+        }
+        
+        example(of: "Linked List COW") {
+            var list1 = LinkedList<Int>()
+            list1.appendCOW(1)
+            list1.appendCOW(2)
+            var list2 = list1
+            print("list1: \(list1)")
+            print("list2: \(list2)")
+            print("---After adding 3 to list 2---")
+            list2.appendCOW(3)
+            print("list1: \(list1)")
+            print("list2: \(list2)")
+        }
     }
 
 }
