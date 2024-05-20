@@ -157,7 +157,7 @@ extension LinkedList {
         guard var oldNode = head else {
             return
         }
-        guard !isKnownUniquelyReferenced(&oldNode) else {  // is  Uniquely Referenced
+        guard !isKnownUniquelyReferenced(&oldNode) else {  // is  Uniquely Referenced for optimization COW
             return
         }
         head = Node(value: oldNode.value)
