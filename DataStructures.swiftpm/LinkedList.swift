@@ -149,3 +149,103 @@ extension LinkedList: Collection {
         position.node!.value
     }
 }
+
+// copy on write
+extension LinkedList {
+    
+    private mutating func copyNodes() {
+        guard var oldNode = head else {
+            return
+        }
+        guard !isKnownUniquelyReferenced(&oldNode) else {  // is  Uniquely Referenced for optimization COW
+            return
+        }
+        head = Node(value: oldNode.value)
+        var newNode = head
+        while let nextOldNode = oldNode.next {
+            newNode?.next = Node(value: nextOldNode.value)
+            newNode = newNode?.next
+            oldNode = nextOldNode
+        }
+        tail = newNode
+    }
+    
+    
+    /// add value at the front of list
+    mutating func pushCOW(_ value: Value) {
+        copyNodes()
+        head = Node(value: value, next: head)
+        if tail == nil {
+            tail = head
+        }
+    }
+    
+    /// add value at the end of list
+    mutating func appendCOW(_ value: Value) {
+        copyNodes()
+        guard !isEmpty else {
+            push(value)
+            return
+        }
+        tail?.next = Node(value: value)
+        tail = tail?.next
+    }
+    
+    @discardableResult
+    mutating func insertCOW(_ value: Value, after node: Node<Value>) -> Node<Value> {
+        copyNodes()
+        guard tail !== node else {
+            append(value)
+            return tail!
+        }
+        node.next = Node(value: value, next: node.next)
+        return node.next!
+    }
+    
+    /// remove value at the front of list
+    @discardableResult
+    mutating func popCOW() -> Value? {
+        copyNodes()
+        defer {
+            head = head?.next
+            if isEmpty {
+                tail = nil
+            }
+        }
+        return head?.value
+    }
+    
+    /// remove last node for list
+    @discardableResult
+    mutating func removeLastCOW() -> Value? {
+        copyNodes()
+        guard let head else {
+            return nil
+        }
+        guard head.next != nil else {
+            return pop()
+        }
+        var prev = head
+        var current = head
+        
+        while let next = current.next {
+            prev = current
+            current = next
+        }
+        prev.next = nil
+        tail = prev
+        return current.value
+    }
+    
+    @discardableResult
+    mutating func removeCOW(after node: Node<Value>) -> Value? {
+        copyNodes()
+        defer {
+            if node.next === tail {
+                tail = node
+            }
+            node.next = node.next?.next
+        }
+        return node.next?.value
+    }
+}

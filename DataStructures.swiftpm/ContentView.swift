@@ -9,6 +9,7 @@ struct ContentView: View {
             Text("Hello, world!").onAppear {
                 createNode()
                 LinkedListOperation().perform()
+                CopyOnWrite().perform()
             }
         }
     }
