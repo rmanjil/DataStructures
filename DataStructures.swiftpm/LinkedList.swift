@@ -109,101 +109,43 @@ extension LinkedList: CustomStringConvertible {
     }
 }
 
-struct LinkedListOperation: Operation {
-    
-    func perform()  {
-        example(of: "Link List ") {
-            push()
-            append()
-            insert()
-            pop()
-            removeLast()
-            removedNode()
-        }
+extension LinkedList: Collection {
         
+    public struct Index: Comparable {
+        var node: Node<Value>?
         
-    }
-    
-    private func push() {
-        example(of: "push") {
-            var list = LinkedList<Int>()
-            list.push(3)
-            list.push(2)
-            list.push(1)
-            
-            print(list)
-        }
-    }
-    
-    private func append() {
-        example(of: "append") {
-            var list = LinkedList<Int>()
-            list.append(1)
-            list.append(2)
-            list.append(3)
-            
-            print(list)
-        }
-    }
-    
-    
-    private func insert() {
-        example(of: "inserting at a particular index") {
-            var list = LinkedList<Int>()
-            list.push(3)
-            list.push(2)
-            list.push(1)
-            
-            print("before inserting: \(list)")
-            var middleNode = list.node(at: 1)!
-            for _ in 1...4 {
-                middleNode = list.insert(-1, after: middleNode)
+        static func ==(lhs: Index, rhs: Index) -> Bool {
+            switch (lhs.node, rhs.node) {
+            case let( left?, right?):
+                left.next === right.next
+            case (nil, nil):
+                true
+            default:
+                false
             }
-            print("After inserting: \(list)")
+        }
+        
+        static func <(lhs: Index, rhs: Index) -> Bool {
+            guard lhs != rhs else { return false }
+            let nodes = sequence(first: lhs.node) { $0?.next }
+            return nodes.contains(where: { $0 === rhs.node })
         }
     }
     
-    private func pop() {
-        example(of: "pop") {
-            var list = LinkedList<Int>()
-            list.push(3)
-            list.push(2)
-            list.push(1)
-            print("Before popping list: \(list)")
-            let poppedValue = list.pop()
-            print("After popping list: \(list)")
-            print("Popped value " + String(describing: poppedValue))
-        }
+    
+    var startIndex: Index {
+        Index(node: head)
     }
     
-    private func removeLast() {
-        example(of: "removing the last node") {
-            var list = LinkedList<Int>()
-            list.push(3)
-            list.push(2)
-            list.push(1)
-            print("Before remove last node: \(list)")
-            let poppedValue = list.removeLast()
-            print("After removing last list: \(list)")
-            print("removed value " + String(describing: poppedValue))
-        }
+    var endIndex: Index {
+        Index(node: tail?.next)
     }
     
-    private func removedNode() {
-        example(of: "removing a node after a particular node") {
-            var list = LinkedList<Int>()
-            list.push(3)
-            list.push(2)
-            list.push(1)
-            
-            print("Before removing at particular index: \(list)")
-            let index = 1
-            let node = list.node(at: index - 1)!
-            let removedValue = list.remove(after: node)
-            
-            print("After removing at index \(index): \(list)")
-            print("Removed value:" + String(describing: removedValue))
-            
-        }
+    func index(after i: Index) -> Index {
+        Index(node: i.node?.next)
+    }
+    
+    subscript(position: Index) -> Value {
+        position.node!.value
     }
 }
