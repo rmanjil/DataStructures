@@ -11,6 +11,10 @@ struct Stack<Element> {
     private var storage: [Element] = []
     init() {}
     
+    init(_ elements: [Element]) {
+        storage = elements
+    }
+    
     mutating func push(_ element: Element) {
         storage.append(element)
     }
@@ -18,6 +22,14 @@ struct Stack<Element> {
     @discardableResult
     mutating func pop() -> Element? {
         storage.popLast()
+    }
+    
+    func peek() -> Element? {
+        storage.last
+    }
+    
+    var isEmpty: Bool {
+        peek() == nil
     }
 }
 

@@ -10,6 +10,7 @@ struct ContentView: View {
                 createNode()
                 LinkedListOperation().perform()
                 CopyOnWrite().perform()
+                StackOperation().perform()
             }
         }
     }
