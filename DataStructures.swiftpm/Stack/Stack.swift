@@ -43,3 +43,10 @@ extension Stack: CustomStringConvertible {
         return topDivider + stackElements + bottomDivider
     }
 }
+
+
+extension Stack: ExpressibleByArrayLiteral {
+    init(arrayLiteral elements: Element...) {
+        storage = elements
+    }
+}
