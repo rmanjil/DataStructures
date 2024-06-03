@@ -11,6 +11,7 @@ struct ContentView: View {
                 LinkedListOperation().perform()
                 CopyOnWrite().perform()
                 StackOperation().perform()
+                QueueArrayOperation().perform() 
             }
         }
     }
